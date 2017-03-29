@@ -1,9 +1,9 @@
 #WARNING:
 #If this file is deleted then this folder will no
 #longer appear to be a project/task in Strange Eons.
-#Thu Nov 03 22:16:17 CET 2016
-open-folders=\:X-wing\:X-wing/resources\:X-wing/resources/x-wing\:X-wing/resources/x-wing/components\:X-wing/resources/x-wing/components/upgrade-card\:test
-first-row=0
+#Wed Mar 29 14:22:39 CEST 2017
+open-folders=\:X-wing\:X-wing/resources\:X-wing/resources/x-wing\:X-wing/resources/x-wing/components\:X-wing/resources/x-wing/components/pilot-card\:X-wing/resources/x-wing/fonts\:X-wing/resources/x-wing/text\:test
+first-row=18
 res-id=henning
 notes=
 type=PROJECT
