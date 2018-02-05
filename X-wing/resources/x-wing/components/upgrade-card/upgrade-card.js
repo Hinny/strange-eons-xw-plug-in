@@ -220,10 +220,16 @@ function createInterface( diy, editor ) {
 
 	dualWeaponCheckbox = checkBox( @xw-weapon );
 	bindings.add( 'DualSecondaryWeapon', dualWeaponCheckbox, [1] );
-	
+
+	styleItems = [];
+	styleItems[0] = ListItem( 'regular', @xw-style-regular );
+	styleItems[1] = ListItem( 'full', @xw-style-full );
+	dualStyleBox = comboBox( styleItems );
+	bindings.add( 'DualStyle', dualStyleBox, [0] );
+
 	dualAttackValueBox = comboBox( attackItems );
 	bindings.add( 'DualAttackValue', dualAttackValueBox, [1] );
-	
+
 	dualRangeBox = comboBox( rangeItems );
 	bindings.add( 'DualRange', dualRangeBox, [1] );
 
@@ -242,6 +248,9 @@ function createInterface( diy, editor ) {
 	backPanel.place( @xw-energylimit, '', dualEnergyLimitBox, 'wmin 70, span 2, wrap para' );
 	backPanel.place( separator(), 'span, growx, wrap para' );
 	backPanel.place( dualWeaponCheckbox, 'wrap para' );
+	backPanel.place( separator(), 'span, growx, wrap para' );
+	backPanel.place( @xw-style, '', dualStyleBox, 'wmin 70, span 2, wrap para' );
+	backPanel.place( separator(), 'span, growx, wrap para' );
 	backPanel.place( @xw-attackvalue, '', dualAttackValueBox, 'wmin 70, span 2, wrap' );
 	backPanel.place( @xw-range, '', dualRangeBox, 'wmin 70, span 2, wrap para' );
 	backPanel.place( separator(), 'span, growx, wrap para' );
@@ -265,6 +274,7 @@ function createInterface( diy, editor ) {
 			} else {
 				attackValueBox.setEnabled(false);
 				rangeBox.setEnabled(false);
+				styleBox.setEnabled(true);
 			}
 			if( dualCheckbox.selected ) {
 				subNameField.setEnabled(true);
@@ -273,13 +283,14 @@ function createInterface( diy, editor ) {
 				dualEnergyLimitBox.setEnabled(true);
 				dualUpgradeTextArea.setEnabled(true);
 				dualUpgradePanel.setVisible(true);
-				styleBox.setEnabled(false);
 				if( dualWeaponCheckbox.selected ) {
 					dualAttackValueBox.setEnabled(true);
 					dualRangeBox.setEnabled(true);
+					dualStyleBox.setEnabled(false);
 				} else {
 					dualAttackValueBox.setEnabled(false);
 					dualRangeBox.setEnabled(false);
+					dualStyleBox.setEnabled(true);
 				}
 			} else {
 				subNameField.setEnabled(false);
@@ -289,6 +300,7 @@ function createInterface( diy, editor ) {
 				dualUpgradeTextArea.setEnabled(false);
 				dualUpgradePanel.setVisible(false);
 				dualWeaponCheckbox.setEnabled(false);
+				dualStyleBox.setEnabled(false);
 				dualAttackValueBox.setEnabled(false);
 				dualRangeBox.setEnabled(false);
 			}			
@@ -305,7 +317,10 @@ function createInterface( diy, editor ) {
 		
 	// Add action listeners
 	weaponCheckbox.addActionListener( actionFunction );
+	styleBox.addActionListener( actionFunction );
+	
 	dualWeaponCheckbox.addActionListener( actionFunction );
+	dualStyleBox.addActionListener( actionFunction );
 	dualCheckbox.addActionListener( actionFunction );
 }
 
@@ -327,11 +342,7 @@ function createBackPainter( diy, sheet ) {
 }
 
 function paintFront( g, diy, sheet ) {
-	if( $Style == 'full' ) {
-		paintCardFaceComponents( g, diy, sheet, 'front');
-	} else {
-		paintCardFaceComponents( g, diy, sheet, 'front-alt');
-	}
+	paintCardFaceComponents( g, diy, sheet, 'front');
 }
 
 function paintBack( g, diy, sheet ) {
@@ -351,6 +362,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	if( side == 'front') {
 		subName = $SubName;
 		secondaryWeapon = $$SecondaryWeapon.yesNo;
+		style = $Style;
 		energyLimit = $EnergyLimit;
 		attackValue = $AttackValue;
 		range = $Range;
@@ -358,6 +370,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	} else if( side == 'back') {
 		subName = $DualSubName;
 		secondaryWeapon = $$DualSecondaryWeapon.yesNo;
+		style = $Style;
 		energyLimit = $DualEnergyLimit;
 		attackValue = $DualAttackValue;
 		range = $DualRange;
@@ -365,7 +378,11 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	}
 	
 	//Draw template
-	imageTemplate =  'upgrade-front-template';
+	if( style == 'full' ) {
+		imageTemplate =  'upgrade-front-alt-template';
+	} else {
+		imageTemplate =  'upgrade-front-template';
+	}
 	sheet.paintImage( g, imageTemplate, 0, 0);
 
 	//Draw portrait
@@ -518,6 +535,7 @@ function onClear() {
 	$DualSubName = '';
 	$DualEnergyLimit = '-';
 	$DualSecondaryWeapon = 'no';
+	$DualStyle = 'regular';
 	$DualAttackValue = '0';
 	$DualRange = '1';
 	$DualText = '';
