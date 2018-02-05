@@ -33,13 +33,12 @@ function getPortrait( index ) {
 }
 
 function create( diy ) {
-	diy.version = 5;
+	diy.version = 6;
 	diy.extensionName = 'Xwing.seext';
 	diy.faceStyle = FaceStyle.TWO_FACES;
 	diy.transparentFaces = false;
 	diy.variableSizedFaces = false;
 	diy.customPortraitHandling = true;
-
 
 	// Front Side Card Art
 	portraits[0] = new DefaultPortrait( diy, 'upgrade-front' );
@@ -53,8 +52,8 @@ function create( diy ) {
 	portraits[1] = new DefaultPortrait( diy, 'upgrade-back' );
 	portraits[1].setScaleUsesMinimum( false );
 	portraits[1].facesToUpdate = [1];
-	portraits[1].backgroundFilled = true;
-	portraits[1].clipping = true;
+	portraits[1].backgroundFilled = false;
+	portraits[1].clipping = false;
 	portraits[1].installDefault();
 
 	diy.frontTemplateKey = 'upgrade-front';
@@ -74,6 +73,7 @@ function create( diy ) {
 	$SecondaryWeapon = #xw-upgrade-weapon;
 	$AttackValue = #xw-upgrade-attack;
 	$Range = #xw-upgrade-range;
+	$Style = #xw-upgrade-style;
 	$Text = #xw-upgrade-text;
 
 	$DualSubName = #xw-upgrade-dual-sub;
@@ -151,6 +151,12 @@ function createInterface( diy, editor ) {
 	weaponCheckbox = checkBox( @xw-weapon );
 	bindings.add( 'SecondaryWeapon', weaponCheckbox, [0] );
 	
+	styleItems = [];
+	styleItems[0] = ListItem( 'regular', @xw-style-regular );
+	styleItems[1] = ListItem( 'full', @xw-style-full );
+	styleBox = comboBox( styleItems );
+	bindings.add( 'Style', styleBox, [0] );	
+	
 	attackItems = [ '0', '1', '2', '3', '4', '5', '6', '7', '8' ];
 	attackValueBox = comboBox( attackItems );
 	bindings.add( 'AttackValue', attackValueBox, [0] );
@@ -191,6 +197,9 @@ function createInterface( diy, editor ) {
 	frontPanel.place( @xw-energylimit, '', energyLimitBox, 'wmin 70, span 2, wrap para' );
 	frontPanel.place( separator(), 'span, growx, wrap para' );
 	frontPanel.place( weaponCheckbox, 'wrap para' );
+	frontPanel.place( separator(), 'span, growx, wrap para' );
+	frontPanel.place( @xw-style, '', styleBox, 'wmin 70, span 2, wrap para' );	
+	frontPanel.place( separator(), 'span, growx, wrap para' );
 	frontPanel.place( @xw-attackvalue, '', attackValueBox, 'wmin 70, span 2, wrap' );
 	frontPanel.place( @xw-range, '', rangeBox, 'wmin 70, span 2, wrap para' );
 	frontPanel.place( separator(), 'span, growx, wrap para' );
@@ -252,6 +261,7 @@ function createInterface( diy, editor ) {
 			if( weaponCheckbox.selected ) {
 				attackValueBox.setEnabled(true);
 				rangeBox.setEnabled(true);
+				styleBox.setEnabled(false);
 			} else {
 				attackValueBox.setEnabled(false);
 				rangeBox.setEnabled(false);
@@ -263,6 +273,7 @@ function createInterface( diy, editor ) {
 				dualEnergyLimitBox.setEnabled(true);
 				dualUpgradeTextArea.setEnabled(true);
 				dualUpgradePanel.setVisible(true);
+				styleBox.setEnabled(false);
 				if( dualWeaponCheckbox.selected ) {
 					dualAttackValueBox.setEnabled(true);
 					dualRangeBox.setEnabled(true);
@@ -316,7 +327,11 @@ function createBackPainter( diy, sheet ) {
 }
 
 function paintFront( g, diy, sheet ) {
-	paintCardFaceComponents( g, diy, sheet, 'front');
+	if( $Style == 'full' ) {
+		paintCardFaceComponents( g, diy, sheet, 'front');
+	} else {
+		paintCardFaceComponents( g, diy, sheet, 'front-alt');
+	}
 }
 
 function paintBack( g, diy, sheet ) {
@@ -495,6 +510,7 @@ function onClear() {
 	$SubName = '';
 	$EnergyLimit = '-';
 	$SecondaryWeapon = 'no';
+	$Style = 'regular';
 	$AttackValue = '0';
 	$Range = '1';
 	$Text = '';
@@ -574,6 +590,10 @@ function onRead( diy, ois ) {
 		portraits[1].installDefault();
 
 		diy.version = 5;
+	}
+	if( diy.version < 6 ) {
+		$Style = 'regular';
+		diy.version = 6;
 	}
 }
 

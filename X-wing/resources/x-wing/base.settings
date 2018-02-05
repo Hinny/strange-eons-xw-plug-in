@@ -277,6 +277,9 @@ condition-legal = x-wing/components/condition-card/images/legal-text.png
 condition-legal-region = 10,465,13,121
 
 # Upgrade Card
+upgrade-front-alt-template = x-wing/components/upgrade-card/images/upgrade-card-front-alt.jp2
+upgrade-front-alt-dpi = 300
+
 upgrade-front-template = x-wing/components/upgrade-card/images/upgrade-card-front.jp2
 upgrade-front-dpi = 300
 upgrade-back-template = x-wing/components/upgrade-card/images/upgrade-card-back.jp2
