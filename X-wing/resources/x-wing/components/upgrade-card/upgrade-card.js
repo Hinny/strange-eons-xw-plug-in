@@ -71,14 +71,15 @@ function create( diy ) {
 
 	$EnergyLimit = #xw-upgrade-energylimit;
 	$SecondaryWeapon = #xw-upgrade-weapon;
+	$Style = #xw-upgrade-style;
 	$AttackValue = #xw-upgrade-attack;
 	$Range = #xw-upgrade-range;
-	$Style = #xw-upgrade-style;
 	$Text = #xw-upgrade-text;
 
 	$DualSubName = #xw-upgrade-dual-sub;
 	$DualEnergyLimit = #xw-upgrade-dual-energylimit;
 	$DualSecondaryWeapon = #xw-upgrade-dual-weapon;
+	$DualStyle = #xw-upgrade-dual-style;
 	$DualAttackValue = #xw-upgrade-dual-attack;
 	$DualRange = #xw-upgrade-dual-range;
 	$DualText = #xw-upgrade-dual-text;
@@ -370,7 +371,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	} else if( side == 'back') {
 		subName = $DualSubName;
 		secondaryWeapon = $$DualSecondaryWeapon.yesNo;
-		style = $Style;
+		style = $DualStyle;
 		energyLimit = $DualEnergyLimit;
 		attackValue = $DualAttackValue;
 		range = $DualRange;
