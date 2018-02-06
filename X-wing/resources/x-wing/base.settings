@@ -279,7 +279,8 @@ condition-legal-region = 10,465,13,121
 # Upgrade Card
 upgrade-front-alt-template = x-wing/components/upgrade-card/images/upgrade-card-front-alt.jp2
 upgrade-front-alt-dpi = 300
-
+upgrade-front-blank-template = x-wing/components/upgrade-card/images/blank.jp2
+upgrade-front-blank-dpi = 300
 upgrade-front-template = x-wing/components/upgrade-card/images/upgrade-card-front.jp2
 upgrade-front-dpi = 300
 upgrade-back-template = x-wing/components/upgrade-card/images/upgrade-card-back.jp2
@@ -306,9 +307,12 @@ upgrade-lower-attribute-region = 382,386,91,87
 upgrade-upper-range-region = 378,406,86,50
 upgrade-lower-range-region = 378,520,86,50
 upgrade-text-region = 73,397,339,290
+upgrade-text-alt-region = 75,510,340,200
 upgrade-cost-region = 372,667,83,54
+upgrade-cost-alt-region = 382,686,40,40
 
 upgrade-icon-region = 25,648,80,80
+upgrade-icon-alt-region = 42,683,36,36
 upgrade-icon-overlay-region = -9,617,150,150
 upgrade-icon-overlay = x-wing/components/upgrade-card/images/upgrade-icon-overlay.jp2
 upgrade-icon2-region = 117,648,80,80
