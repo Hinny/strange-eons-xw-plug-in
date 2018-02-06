@@ -85,6 +85,7 @@ function create( diy ) {
 }
 
 function createInterface( diy, editor ) {
+
 	bindings = new Bindings( editor, diy );
 
 	// Common Panel	
@@ -257,11 +258,11 @@ function createInterface( diy, editor ) {
 	function actionFunction( actionEvent )
 	{
 		try {
-			if( weaponCheckbox.selected ) {
+			if( weaponCheckbox.selected ) {  // secondary weapon
 				attackValueBox.setEnabled(true);
 				rangeBox.setEnabled(true);
 				styleBox.setEnabled(false);
-			} else {
+			} else {  // normal upgrade card
 				attackValueBox.setEnabled(false);
 				rangeBox.setEnabled(false);
 				styleBox.setEnabled(true);
@@ -280,7 +281,7 @@ function createInterface( diy, editor ) {
 					dualAttackValueBox.setEnabled(false);
 					dualRangeBox.setEnabled(false);
 				}
-			} else {
+			} else { // not a dual card, disable all "dual" features
 				subNameField.setEnabled(false);
 				dualWeaponCheckbox.setEnabled(false);
 				dualSubNameField.setEnabled(false);
@@ -362,7 +363,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 		range = $DualRange;
 		text = $DualText;
 	}
-	
+
 	//Draw template
 	sheet.paintImage( g, 'upgrade-front-blank-template', 0, 0);
 	if( style != 'full' ) {
@@ -379,7 +380,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	} else {
 		portraits[1].paint( g, target );
 	}
-	
+
 	// Draw overlays, name, energy, attack and range 
 	if( $$UniqueUpgrade.yesNo ) {
 		if( subName && $$Dual.yesNo ) {
@@ -394,7 +395,8 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 			nameBox.markupText = diy.name;
 		}
 	}
-	if( secondaryWeapon ) {
+
+	if( secondaryWeapon ) { // secondary weapon
 		if ( energyLimit == '-' ) {
 			sheet.paintImage( g, 'upgrade-attack-template', 0, 0 );
 			sheet.drawOutlinedTitle( g, attackValue, R( 'upper-attribute' ), Xwing.numberFont, 14, 1, Xwing.getColor('attack'), Color.BLACK, sheet.ALIGN_CENTER, true);
@@ -407,17 +409,21 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 			sheet.drawOutlinedTitle( g, range, R('lower-range'), Xwing.numberFont, 8, 1, Color.WHITE, Color.BLACK, sheet.ALIGN_CENTER, true);
 			nameBox.draw( g, R('short-name') );
 		}
-	} else {
-		if ( energyLimit == '-' && style == 'regular' ) {
-			sheet.paintImage( g, 'upgrade-normal-template', 0, 0 );
-			nameBox.draw( g, R('name') );
-		} else if (energyLimit != '-') {
+	} else { // not secondary weapon
+		if ( energyLimit == '-'){ // not an epic card ( w/ energy)
+			if (style == 'regular' ) { //normal card
+				sheet.paintImage( g, 'upgrade-normal-template', 0, 0 );
+				nameBox.draw( g, R('name') );
+			} else { // alt upgrade card (no name overlay)
+				nameBox.draw( g, R('name-alt') );
+			}
+		} else if (energyLimit != '-') { // energy
 			sheet.paintImage( g, 'upgrade-energy-template', 0, 0 );
 			sheet.drawOutlinedTitle( g, energyLimit, R( 'upper-attribute' ), Xwing.numberFont, 14, 1, Xwing.getColor('energy'), Color.BLACK, sheet.ALIGN_CENTER, true);
 			nameBox.draw( g, R('short-name') );
 		}
 	}
-		
+
 	// Determine Text Area
 	a = 0;
 	b = 0;
@@ -435,11 +441,6 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 			c = 62;			
 		}
 	}
-	if ( style == 'full' ){
-			a = 10;
-			b = 200;
-			c = 0;
-	}
 	if( $UpgradeType != 'modification' && $UpgradeType != 'title' ) {
 		if(  $$DoubleIcon.yesNo ) {
 			d = 110;
@@ -455,7 +456,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 			PageShape.CupShape( 0, c, 596, 0, 0 ) ),
 		642,
 		PageShape.CupShape( d, 0, 655, e, 97 ) ) );
-		
+
 	// Determine Text content
 	var restriction = $Restriction;
 	if( $UpgradeType == 'modification' ) {
@@ -516,7 +517,6 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 				// ALT ART: no overlay but alt region
 				upgradeIconBox.draw( g, R('icon2-alt') );
 			}
-			
 		}	
 	}
 
