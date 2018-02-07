@@ -261,6 +261,7 @@ function createInterface( diy, editor ) {
 			if( weaponCheckbox.selected ) {  // secondary weapon
 				attackValueBox.setEnabled(true);
 				rangeBox.setEnabled(true);
+				styleBox.setSelectedIndex(0); // no alt for secondary weapon
 				styleBox.setEnabled(false);
 			} else {  // normal upgrade card
 				attackValueBox.setEnabled(false);
@@ -272,11 +273,14 @@ function createInterface( diy, editor ) {
 				dualWeaponCheckbox.setEnabled(true);
 				dualSubNameField.setEnabled(true);
 				dualEnergyLimitBox.setEnabled(true);
-				dualUpgradeTextArea.setEnabled(true);
+				dualUpgradeTextArea.setVisible(true);
 				dualUpgradePanel.setVisible(true);
+				styleBox.setEnabled(true);
 				if( dualWeaponCheckbox.selected ) {
 					dualAttackValueBox.setEnabled(true);
 					dualRangeBox.setEnabled(true);
+					styleBox.setSelectedIndex(0); // no alt for secondary weapon
+					styleBox.setEnabled(false);
 				} else {
 					dualAttackValueBox.setEnabled(false);
 					dualRangeBox.setEnabled(false);
@@ -286,7 +290,7 @@ function createInterface( diy, editor ) {
 				dualWeaponCheckbox.setEnabled(false);
 				dualSubNameField.setEnabled(false);
 				dualEnergyLimitBox.setEnabled(false);
-				dualUpgradeTextArea.setEnabled(false);
+				dualUpgradeTextArea.setVisible(false);
 				dualUpgradePanel.setVisible(false);
 				dualWeaponCheckbox.setEnabled(false);
 				dualAttackValueBox.setEnabled(false);
@@ -306,7 +310,6 @@ function createInterface( diy, editor ) {
 	// Add action listeners
 	weaponCheckbox.addActionListener( actionFunction );
 	styleBox.addActionListener( actionFunction );
-	
 	dualWeaponCheckbox.addActionListener( actionFunction );
 	dualCheckbox.addActionListener( actionFunction );
 }
@@ -346,10 +349,12 @@ function paintBack( g, diy, sheet ) {
 }
 
 function paintCardFaceComponents( g, diy, sheet, side) {
+	// common vars
+	style = $Style;
+
 	if( side == 'front') {
 		subName = $SubName;
 		secondaryWeapon = $$SecondaryWeapon.yesNo;
-		style = $Style;
 		energyLimit = $EnergyLimit;
 		attackValue = $AttackValue;
 		range = $Range;
@@ -357,21 +362,27 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	} else if( side == 'back') {
 		subName = $DualSubName;
 		secondaryWeapon = $$DualSecondaryWeapon.yesNo;
-		style = $Style;
 		energyLimit = $DualEnergyLimit;
 		attackValue = $DualAttackValue;
 		range = $DualRange;
 		text = $DualText;
 	}
 
-	//Draw template
-	sheet.paintImage( g, 'upgrade-front-blank-template', 0, 0);
-	if( style != 'full' ) {
-		imageTemplate =  'upgrade-front-template';
-	} else {
+	// to avoid reminiscence redraw a black image
+	sheet.paintImage( g, 'upgrade-blank-template', 0, 0);
+	if( style == 'full' ) { // full art: custom template and regions
 		imageTemplate =  'upgrade-front-alt-template';
+		$upgrade-front-portrait-clip-region = $upgrade-portrait-alt-region;
+		$upgrade-front-portrait-true-clip-region = $upgrade-portrait-alt-region;
+		$upgrade-back-portrait-clip-region = $upgrade-portrait-alt-region;
+		$upgrade-back-portrait-true-clip-region = $upgrade-portrait-alt-region;
+	} else { // regular art: set default region
+		imageTemplate =  'upgrade-front-template';
+		$upgrade-front-portrait-clip-region = $upgrade-portrait-default-region;
+		$upgrade-front-portrait-true-clip-region = $upgrade-portrait-default-region;
+		$upgrade-back-portrait-clip-region = $upgrade-portrait-default-region;
+		$upgrade-back-portrait-true-clip-region = $upgrade-portrait-default-region;
 	}
-	sheet.paintImage( g, imageTemplate, 0, 0);
 
 	//Draw portrait
 	target = sheet.getRenderTarget();
@@ -380,6 +391,9 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	} else {
 		portraits[1].paint( g, target );
 	}
+
+	//Draw template
+	sheet.paintImage( g, imageTemplate, 0, 0);
 
 	// Draw overlays, name, energy, attack and range 
 	if( $$UniqueUpgrade.yesNo ) {
@@ -411,11 +425,11 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 		}
 	} else { // not secondary weapon
 		if ( energyLimit == '-'){ // not an epic card ( w/ energy)
-			if (style == 'regular' ) { //normal card
+			if (style == 'full' ) { // full art: no overlay but alt region
+				nameBox.draw( g, R('name-alt') ); // moved region
+			} else { // regular style
 				sheet.paintImage( g, 'upgrade-normal-template', 0, 0 );
 				nameBox.draw( g, R('name') );
-			} else { // alt upgrade card (no name overlay)
-				nameBox.draw( g, R('name-alt') );
 			}
 		} else if (energyLimit != '-') { // energy
 			sheet.paintImage( g, 'upgrade-energy-template', 0, 0 );
@@ -441,7 +455,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 			c = 62;			
 		}
 	}
-	if( $UpgradeType != 'modification' && $UpgradeType != 'title' ) {
+	if( $UpgradeType != 'title' ) {
 		if(  $$DoubleIcon.yesNo ) {
 			d = 110;
 			e = 125;
@@ -487,45 +501,36 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	
 	upgradeTextBox.markupText = '<top>' + restriction + text;
 	
-	
+
 	// Draw the Upgrade Text
-	if (style != 'full' ){
-		upgradeTextBox.draw( g, R('text') );
-	} else {
-		// ALT ART: no overlay but alt region
+	if (style == 'full' ){ // full art: alt region
 		upgradeTextBox.draw( g, R('text-alt') );
+	} else { // regular style
+		upgradeTextBox.draw( g, R('text') );
 	}
 
-	
 	// Draw the Upgrade Icon
-	if( $UpgradeType != 'modification' && $UpgradeType != 'title' ) {
-		if (style != 'full' ){
+	if( $UpgradeType != 'title' ) { // no icon for title
+		if (style == 'full' ){  // full art: no overlay but alt region
+			upgradeIconBox.markupText = '<' + $UpgradeType + '>';
+			upgradeIconBox.draw( g, R('icon-alt') );
+		} else { // regular art
 			sheet.paintImage( g, 'upgrade-icon-overlay', 'upgrade-icon-overlay-region');
 			upgradeIconBox.markupText = '<' + $UpgradeType + '>';
 			upgradeIconBox.draw( g, R('icon') );
-		} else {
-			// ALT ART: no overlay but alt region
-			upgradeIconBox.markupText = '<' + $UpgradeType + '>';
-			upgradeIconBox.draw( g, R('icon-alt') );
 		}
 
-		if( $$DoubleIcon.yesNo ) {
-			if (style != 'full' ){
-				sheet.paintImage( g, 'upgrade-icon-overlay', 'upgrade-icon2-overlay-region');
-				upgradeIconBox.draw( g, R('icon2') );
-			} else {
-				// ALT ART: no overlay but alt region
-				upgradeIconBox.draw( g, R('icon2-alt') );
-			}
+		if( $$DoubleIcon.yesNo  && style != 'full') {  // full art does not support double icons yet
+			sheet.paintImage( g, 'upgrade-icon-overlay', 'upgrade-icon2-overlay-region');
+			upgradeIconBox.draw( g, R('icon2') );
 		}	
 	}
 
 	// Draw the Point Cost
-	if (style != 'full' ){
-		sheet.drawOutlinedTitle( g, $PointCost, R('cost'), Xwing.numberFont, 8, 0.5, Color.BLACK, Color.WHITE, sheet.ALIGN_CENTER, true);
-	} else {
-		// ALT ART: no overlay but alt region
+	if (style == 'full' ){ // full art: different region
 		sheet.drawOutlinedTitle( g, $PointCost, R('cost-alt'), Xwing.numberFont, 8, 0.5, Color.BLACK, Color.WHITE, sheet.ALIGN_CENTER, true);
+	} else { // regular art
+		sheet.drawOutlinedTitle( g, $PointCost, R('cost'), Xwing.numberFont, 8, 0.5, Color.BLACK, Color.WHITE, sheet.ALIGN_CENTER, true);
 	}
 	// Draw Legal text
 	sheet.paintImage( g, 'upgrade-legal', 'upgrade-legal-region');

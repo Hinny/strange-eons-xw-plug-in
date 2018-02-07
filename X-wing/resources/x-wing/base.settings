@@ -277,12 +277,12 @@ condition-legal = x-wing/components/condition-card/images/legal-text.png
 condition-legal-region = 10,465,13,121
 
 # Upgrade Card
-upgrade-front-alt-template = x-wing/components/upgrade-card/images/upgrade-card-front-alt.jp2
-upgrade-front-alt-dpi = 300
-upgrade-front-blank-template = x-wing/components/upgrade-card/images/blank.jp2
-upgrade-front-blank-dpi = 300
+upgrade-blank-template = x-wing/components/upgrade-card/images/blank.jp2
+upgrade-blank-dpi = 300
 upgrade-front-template = x-wing/components/upgrade-card/images/upgrade-card-front.jp2
 upgrade-front-dpi = 300
+upgrade-front-alt-template = x-wing/components/upgrade-card/images/upgrade-card-front-alt.jp2
+upgrade-front-alt-dpi = 300
 upgrade-back-template = x-wing/components/upgrade-card/images/upgrade-card-back.jp2
 upgrade-back-dpi = 300
 upgrade-normal-template = x-wing/components/upgrade-card/images/upgrade-card-normal.jp2
@@ -294,6 +294,8 @@ upgrade-energy-dpi = 300
 upgrade-energy-attack-template = x-wing/components/upgrade-card/images/upgrade-card-energy-attack.jp2
 upgrade-energy-attack-dpi = 300
 
+upgrade-portrait-default-region = 0,0,484,328
+upgrade-portrait-alt-region = 0,0,484,744
 upgrade-front-portrait-template = x-wing/components/upgrade-card/images/example-art.jpg
 upgrade-front-portrait-clip-region = 0,0,484,328
 upgrade-front-portrait-true-clip-region = 0,0,484,328
@@ -318,6 +320,7 @@ upgrade-icon-alt-region = 42,683,36,36
 upgrade-icon-overlay-region = -9,617,150,150
 upgrade-icon-overlay = x-wing/components/upgrade-card/images/upgrade-icon-overlay.jp2
 upgrade-icon2-region = 117,648,80,80
+upgrade-icon2-alt-region = 117,648,80,80
 upgrade-icon2-overlay-region = 83,617,150,150
 
 
