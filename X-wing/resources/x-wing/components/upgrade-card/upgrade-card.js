@@ -125,7 +125,7 @@ function createInterface( diy, editor ) {
 	styleItems[0] = ListItem( 'regular', @xw-style-regular );
 	styleItems[1] = ListItem( 'full', @xw-style-full );
 	styleBox = comboBox( styleItems );
-	bindings.add( 'Style', styleBox, [0] );	
+	bindings.add( 'Style', styleBox, [0, 1] );
 
 	restrictionItems = [ #xw-restriction-limited, #xw-restriction-rebel, #xw-restriction-imperial, #xw-restriction-scum, #xw-restriction-small, #xw-restriction-large, #xw-restriction-huge ];
 	upgradeRestrictionField = autocompletionField( restrictionItems );
@@ -280,7 +280,7 @@ function createInterface( diy, editor ) {
 				dualWeaponCheckbox.setEnabled(true);
 				dualSubNameField.setEnabled(true);
 				dualEnergyLimitBox.setEnabled(true);
-				dualUpgradeTextArea.setVisible(true);
+				dualUpgradeTextArea.setEnabled(true);
 				dualUpgradePanel.setVisible(true);
 				if( dualWeaponCheckbox.selected ) {
 					dualAttackValueBox.setEnabled(true);
@@ -294,7 +294,7 @@ function createInterface( diy, editor ) {
 				dualWeaponCheckbox.setEnabled(false);
 				dualSubNameField.setEnabled(false);
 				dualEnergyLimitBox.setEnabled(false);
-				dualUpgradeTextArea.setVisible(false);
+				dualUpgradeTextArea.setEnabled(false);
 				dualUpgradePanel.setVisible(false);
 				dualWeaponCheckbox.setEnabled(false);
 				dualAttackValueBox.setEnabled(false);
