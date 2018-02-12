@@ -39,7 +39,7 @@ function getPortrait( index ) {
 
 
 function create( diy ) {
-	diy.version = 5;
+	diy.version = 6;
 	diy.extensionName = 'Xwing.seext';
 	diy.faceStyle = FaceStyle.CARD_AND_MARKER;
 	diy.transparentFaces = true;
@@ -103,6 +103,7 @@ function create( diy ) {
 	$CustomArcAction = #xw-pilot-custom-arc;
 	$CustomCoordinateAction = #xw-pilot-custom-coordinate;
 	$CustomReinforceAction = #xw-pilot-custom-reinforce;
+	$CustomReloadAction = #xw-pilot-custom-reload;
 	$CustomUpgrade1 = #xw-pilot-custom-upgrade-1;
 	$CustomUpgrade2 = #xw-pilot-custom-upgrade-2;
 	$CustomUpgrade3 = #xw-pilot-custom-upgrade-3;
@@ -252,6 +253,7 @@ function createInterface( diy, editor ) {
 	arcItems[2] = ListItem( 'extended', @xw-arc-extended-front );
 	arcItems[3] = ListItem( 'turret', @xw-arc-turret );
 	arcItems[4] = ListItem( 'mobile', @xw-arc-mobile );
+	arcItems[5] = ListItem( 'bullseye', @xw-arc-bullseye );
 	customArcBox = comboBox( arcItems );
 	bindings.add( 'CustomArc', customArcBox, [0,2] );
 
@@ -293,6 +295,8 @@ function createInterface( diy, editor ) {
 	bindings.add( 'CustomCoordinateAction', customCoordinateCheckbox, [0,2] );
 	customReinforceCheckbox = checkBox( @xw-action-reinforce );
 	bindings.add( 'CustomReinforceAction', customReinforceCheckbox, [0,2] );
+	customReloadCheckbox = checkBox( @xw-action-reload );
+	bindings.add( 'CustomReloadAction', customReloadCheckbox, [0,2] );
 	
 	upgradeItems = [];
 	upgradeItems[0] = ListItem( '-', '-' );
@@ -395,7 +399,7 @@ function createInterface( diy, editor ) {
 	customPanel.place( customFocusCheckbox, '', customLockCheckbox, '', customRollCheckbox, 'wrap' );
 	customPanel.place( customBoostCheckbox, '', customEvadeCheckbox, '', customCloakCheckbox, 'wrap' );
 	customPanel.place( customSlamCheckbox,  '', customArcCheckbox, '', customCoordinateCheckbox, 'wrap' );
-	customPanel.place( customReinforceCheckbox,  'wrap para' );
+	customPanel.place( customReinforceCheckbox, '', customReloadCheckbox,  'wrap para' );
 	customPanel.place( separator(), 'span, growx, wrap para' );
 	customPanel.place( @xw-upgrades, 'wrap' );
 	customPanel.place( customUpgradeBox1, 'wmin 100', customUpgradeBox2, 'wmin 100', customUpgradeBox3, 'wmin 100, wrap' );
@@ -431,6 +435,7 @@ function createInterface( diy, editor ) {
 				customArcCheckbox.setEnabled(false);
 				customCoordinateCheckbox.setEnabled(false);
 				customReinforceCheckbox.setEnabled(false);
+				customReloadCheckbox.setEnabled(false);
 				customUpgradeBox1.setEnabled(false);
 				customUpgradeBox2.setEnabled(false);
 				customUpgradeBox3.setEnabled(false);
@@ -459,6 +464,7 @@ function createInterface( diy, editor ) {
 				customSlamCheckbox.setEnabled(true);
 				customCoordinateCheckbox.setEnabled(true);
 				customReinforceCheckbox.setEnabled(true);
+				customReloadCheckbox.setEnabled(true);
 				customArcCheckbox.setEnabled(true);
 				customUpgradeBox1.setEnabled(true);
 				customUpgradeBox2.setEnabled(true);
@@ -707,6 +713,11 @@ function paintFront( g, diy, sheet ) {
 				g.setStroke(normalStroke);
 				g.drawLine( 0, tokenHeight+3, Math.round(tokenWidth/2), Math.round(tokenHeight/2)-17 );
 				g.drawLine( tokenWidth, tokenHeight+3, Math.round(tokenWidth/2), Math.round(tokenHeight/2)-17 );
+			} else if( ( $ShipType == 'custom' && $CustomArc == 'bullseye' ) || ( $ShipType != 'custom' &&  getShipStat( $ShipType, 'arc' ) == 'bullseye' ) ) {
+				g.setStroke(dashedStroke);
+				$offset = Math.round(tokenWidth/4);
+				g.drawLine( 0 + $offset, 0, 0 + $offset, 0 + $offset );
+				g.drawLine( tokenWidth - $offset, 0, tokenWidth - $offset, 0 + $offset );
 			}
 		}
 		
@@ -783,6 +794,7 @@ function paintFront( g, diy, sheet ) {
 			if( $$CustomArcAction.yesNo ) { actions.push( 'arc' ); }
 			if( $$CustomCoordinateAction.yesNo ) { actions.push( 'coordinate' ); }
 			if( $$CustomReinforceAction.yesNo ) { actions.push( 'reinforce' ); }
+			if( $$CustomReloadAction.yesNo ) { actions.push( 'reload' ); }
 		} else {
 			actions = getShipStat( $ShipType, 'actions' ).split( ',' );		
 		}
@@ -935,6 +947,7 @@ function paintFront( g, diy, sheet ) {
 		if( $$CustomArcAction.yesNo ) { actions.push( 'arc' ); }
 		if( $$CustomCoordinateAction.yesNo ) { actions.push( 'coordinate' ); }
 		if( $$CustomReinforceAction.yesNo ) { actions.push( 'reinforce' ); }
+		if( $$CustomReloadAction.yesNo ) { actions.push( 'reload' ); }
 	} else {
 		actions = getShipStat( $ShipType, 'actions' ).split( ',' );		
 	}	
@@ -1015,6 +1028,7 @@ function onClear() {
 	$CustomArcAction = 'no';
 	$CustomCoordinateAction = 'no';
 	$CustomReinforceAction = 'no';
+	$CustomReloadAction = 'no';
 	$CustomUpgrade1 = '-';
 	$CustomUpgrade2 = '-';
 	$CustomUpgrade3 = '-';
@@ -1063,6 +1077,10 @@ function onRead( diy, ois ) {
 		$CustomCoordinateAction = 'no';
 		$CustomReinforceAction = 'no';
 		diy.version = 5;
+	}
+	if( diy.version < 6 ) {
+		$CustomReloadAction = 'no';
+		diy.version = 6;
 	}
 
 	
