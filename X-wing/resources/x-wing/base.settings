@@ -316,7 +316,7 @@ upgrade-cost-region = 372,667,83,54
 upgrade-cost-alt-region = 382,686,40,40
 
 upgrade-icon-region = 25,648,80,80
-upgrade-icon-alt-region = 42,683,36,36
+upgrade-icon-alt-region = 42,685,36,36
 upgrade-icon-overlay-region = -9,617,150,150
 upgrade-icon-overlay = x-wing/components/upgrade-card/images/upgrade-icon-overlay.jp2
 upgrade-icon2-region = 117,648,80,80
