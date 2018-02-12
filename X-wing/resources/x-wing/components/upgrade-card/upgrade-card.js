@@ -258,15 +258,22 @@ function createInterface( diy, editor ) {
 	function actionFunction( actionEvent )
 	{
 		try {
-			if( weaponCheckbox.selected ) {  // secondary weapon
+			// art style should determine if secondary weapon can be used
+			if( styleBox.getSelectedIndex() == 1){
+				weaponCheckbox.setSelected(false);
+				dualWeaponCheckbox.setSelected(false);
+				weaponCheckbox.setEnabled(false);
+				dualWeaponCheckbox.setEnabled(false);
+			} else {
+				weaponCheckbox.setEnabled(true);
+				dualWeaponCheckbox.setEnabled(true);
+			}
+			if( weaponCheckbox.selected ) {
 				attackValueBox.setEnabled(true);
 				rangeBox.setEnabled(true);
-				styleBox.setSelectedIndex(0); // no alt for secondary weapon
-				styleBox.setEnabled(false);
-			} else {  // normal upgrade card
+			} else {
 				attackValueBox.setEnabled(false);
 				rangeBox.setEnabled(false);
-				styleBox.setEnabled(true);
 			}
 			if( dualCheckbox.selected ) {
 				subNameField.setEnabled(true);
@@ -275,17 +282,14 @@ function createInterface( diy, editor ) {
 				dualEnergyLimitBox.setEnabled(true);
 				dualUpgradeTextArea.setVisible(true);
 				dualUpgradePanel.setVisible(true);
-				styleBox.setEnabled(true);
 				if( dualWeaponCheckbox.selected ) {
 					dualAttackValueBox.setEnabled(true);
 					dualRangeBox.setEnabled(true);
-					styleBox.setSelectedIndex(0); // no alt for secondary weapon
-					styleBox.setEnabled(false);
 				} else {
 					dualAttackValueBox.setEnabled(false);
 					dualRangeBox.setEnabled(false);
 				}
-			} else { // not a dual card, disable all "dual" features
+			} else {
 				subNameField.setEnabled(false);
 				dualWeaponCheckbox.setEnabled(false);
 				dualSubNameField.setEnabled(false);
@@ -295,7 +299,7 @@ function createInterface( diy, editor ) {
 				dualWeaponCheckbox.setEnabled(false);
 				dualAttackValueBox.setEnabled(false);
 				dualRangeBox.setEnabled(false);
-			}			
+			}
 		} catch( ex ) {
 			Error.handleUncaught( ex );
 		}
@@ -351,7 +355,6 @@ function paintBack( g, diy, sheet ) {
 function paintCardFaceComponents( g, diy, sheet, side) {
 	// common vars
 	style = $Style;
-
 	if( side == 'front') {
 		subName = $SubName;
 		secondaryWeapon = $$SecondaryWeapon.yesNo;
@@ -370,6 +373,7 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 
 	// to avoid reminiscence redraw a black image
 	sheet.paintImage( g, 'upgrade-blank-template', 0, 0);
+	
 	if( style == 'full' ) { // full art: custom template and regions
 		imageTemplate =  'upgrade-front-alt-template';
 		$upgrade-front-portrait-clip-region = $upgrade-portrait-alt-region;
