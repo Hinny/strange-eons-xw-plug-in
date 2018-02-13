@@ -323,7 +323,6 @@ upgrade-icon2-region = 117,648,80,80
 upgrade-icon2-alt-region = 117,648,80,80
 upgrade-icon2-overlay-region = 83,617,150,150
 
-
 upgrade-back-symbol-region = 90,224,300,300
 upgrade-back-astromech = x-wing/components/upgrade-card/images/big-upgrade-astromech.jp2
 upgrade-back-bomb =  x-wing/components/upgrade-card/images/big-upgrade-bomb.jp2
@@ -345,6 +344,8 @@ upgrade-back-salvaged =  x-wing/components/upgrade-card/images/big-upgrade-salva
 
 upgrade-legal-region = 8,159,13,121
 upgrade-legal = x-wing/components/upgrade-card/images/legal-text.png
+upgrade-legal-alt-region = 95,685,78,13
+upgrade-legal-alt = x-wing/components/upgrade-card/images/legal-text-alt.png
 
 # Maneuver Dial
 maneuver-shiptype-region = 121,355,274,82

@@ -443,37 +443,40 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	}
 
 	// Determine Text Area
-	a = 0;
-	b = 0;
-	c = 0;
-	d = 0;
-	e = 45;
-	if( secondaryWeapon ) {
-		if( energyLimit == '-' ) {
-			a = 62;
-			b = 481;
-			c = 0;
-		} else {
-			a = 79;
-			b = 493;
-			c = 62;			
+	if ( style != 'full' ){
+		a = 0;
+		b = 0;
+		c = 0;
+		d = 0;
+		e = 45;
+		if( secondaryWeapon ) {
+			if( energyLimit == '-' ) {
+				a = 62;
+				b = 481;
+				c = 0;
+			} else {
+				a = 79;
+				b = 493;
+				c = 62;
+			}
 		}
-	}
-	if( $UpgradeType != 'title' ) {
-		if(  $$DoubleIcon.yesNo ) {
-			d = 110;
-			e = 125;
-		} else {
-			d = 30;
+		if( $UpgradeType != 'title' ) {
+			if(  $$DoubleIcon.yesNo ) {
+				d = 110;
+				e = 125;
+			} else {
+				d = 30;
+			}
 		}
-	}
-	upgradeTextBox.setPageShape( PageShape.CompoundShape(
+
+		upgradeTextBox.setPageShape( PageShape.CompoundShape(
 		PageShape.CompoundShape(
 			PageShape.CupShape( 0, a, b, 0, 0 ),
 			b,
 			PageShape.CupShape( 0, c, 596, 0, 0 ) ),
 		642,
 		PageShape.CupShape( d, 0, 655, e, 97 ) ) );
+	}
 
 	// Determine Text content
 	var restriction = $Restriction;
@@ -536,8 +539,13 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	} else { // regular art
 		sheet.drawOutlinedTitle( g, $PointCost, R('cost'), Xwing.numberFont, 8, 0.5, Color.BLACK, Color.WHITE, sheet.ALIGN_CENTER, true);
 	}
+	
 	// Draw Legal text
-	sheet.paintImage( g, 'upgrade-legal', 'upgrade-legal-region');
+	if ( style == 'full' ){ // if full legal is on bottom, in black
+		sheet.paintImage( g, 'upgrade-legal-alt', 'upgrade-legal-alt-region');
+	} else {
+		sheet.paintImage( g, 'upgrade-legal', 'upgrade-legal-region');
+	}
 }
 
 function onClear() {
