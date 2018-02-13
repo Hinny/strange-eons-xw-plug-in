@@ -14,7 +14,13 @@ pilot-resistance-front-template = x-wing/components/pilot-card/images/resistance
 pilot-resistance-front-dpi = 300
 pilot-resistance-back-template = x-wing/components/pilot-card/images/resistance-back-overlay.jp2
 pilot-resistance-back-dpi = 300
-pilot-rebel-front-template = x-wing/components/pilot-card/images/rebel-front-frame.jp2
+pilot-rebelext-front-template = x-wing/components/pilot-card/images/rebelext-front-frame.jp2
+pilot-rebelext-front-dpi = 300
+pilot-scumext-front-template = x-wing/components/pilot-card/images/scumext-front-frame.png
+pilot-scumlext-front-dpi = 300
+pilot-imperialext-front-template = x-wing/components/pilot-card/images/imperialext-front-frame.png
+pilot-impearialext-front-dpi = 300
+pilot-rebel-front-template = x-wing/components/pilot-card/images/rebel-front-frame.jp2 
 pilot-rebel-front-dpi = 300
 pilot-rebel-back-template = x-wing/components/pilot-card/images/rebel-back.jp2
 pilot-rebel-back-dpi = 300
@@ -53,37 +59,55 @@ pilot-large-token-template = x-wing/components/pilot-card/images/large-token.jp2
 pilot-large-token-dpi = 300
 
 pilot-portrait-template = x-wing/components/pilot-card/images/example-art.jpg
-pilot-portrait-clip-region = 0,0,739,306
+pilot-portrait-clip-region = 0,0,739,607
+pilot-portraitoverlay-empire = x-wing/components/pilot-card/images/pilot-portraitoverlay-imperial.png
+pilot-portraitoverlay-alliance = x-wing/components/pilot-card/images/pilot-portraitoverlay-rebels.png
+pilot-portraitoverlay-firstorder = x-wing/components/pilot-card/images/pilot-portraitoverlay-firstorder.png
+pilot-portraitoverlay-resistance = x-wing/components/pilot-card/images/pilot-portraitoverlay-resistance.png
+pilot-portraitoverlay-scum = x-wing/components/pilot-card/images/pilot-portraitoverlay-scum.png
+pilot-portraitoverlay-region = 0,532,739,117
+
 
 ship-card-portrait-template = x-wing/components/pilot-card/images/example-icon.png
-ship-card-portrait-clip-region = 38,951,53,53
-ship-card-portrait-true-clip-region = 38,951,53,53
+ship-card-portrait-clip-region = 127,963,52,56
+ship-card-portrait-true-clip-region = 127,963,52,56
 
 ship-marker-portrait-template = x-wing/components/pilot-card/images/example-icon.png
 ship-marker-portrait-clip-region = 38,387,170,170
 ship-marker-portrait-true-clip-region = 38,387,170,170
 
 attack-front-template = x-wing/components/pilot-card/images/attack-front.png
-attack-front-region = 22,487,90,90
+attack-front-region = 3,658,66,61
 attack-rear-template = x-wing/components/pilot-card/images/attack-rear.png
-attack-rear-region = 22,487,90,90
+attack-rear-region = 3,658,66,61
 attack-extended-template = x-wing/components/pilot-card/images/attack-extended.png
-attack-extended-region = 22,487,90,90
+attack-extended-region = 3,658,66,61
 attack-turret-template = x-wing/components/pilot-card/images/attack-turret.png
-attack-turret-region = 22,487,90,90
+attack-turret-region = 3,658,66,61
 attack-mobile-template = x-wing/components/pilot-card/images/attack-front.png
-attack-mobile-region = 22,487,90,90
+attack-mobile-region = 3,658,66,61
 
-pilot-name-region = 135,319,477,69
-pilot-shiptype-region = 135,405,477,69
-pilot-ps-region = 13,345,100,100
-pilot-pwv-region = 116,492,75,84
-pilot-agi-region = 116,599,75,84
-pilot-hull-region = 116,704,75,84
-pilot-shield-region = 116,810,75,84
-pilot-text-region = 238,544,482,152
-pilot-cost-region = 605,956,81,46
-pilot-icon-region = 36,949,60,60
+#pilot-name-region = 135,319,477,69
+pilot-name-region = 125,558,496,66
+#pilot-shiptype-region = 135,405,477,69
+pilot-shiptype-region = 125,961,58,64
+#pilot-ps-region = 13,345,100,100
+pilot-ps-region = 28,550,65,68
+#pilot-pwv-region = 116,492,75,84
+pilot-pwv-region = 3,658,66,61
+pilot-agi-region = 2,758,71,57
+#pilot-agi-region = 116,599,75,84
+#pilot-hull-region = 116,704,75,84
+pilot-hull-region = 1,856,74,66
+#pilot-shield-region = 116,810,75,84
+pilot-shield-region = 0,957,76,67
+#pilot-text-region = 238,544,482,152
+pilot-text-region = 115,642,620,161
+#pilot-cost-region = 605,956,81,46
+pilot-cost-region = 666,974,71,39
+#pilot-icon-region = 36,949,60,60
+pilot-icon-region = 128,965,51,56
+#36,949,60,60
 pilot-small-token-name-region = 135,343,229,33
 pilot-large-token-name-region = 344,760,304,34
 pilot-small-token-ps-region = 24,270,100,100
@@ -98,7 +122,7 @@ pilot-small-token-shield-region = 285,376,75,75
 pilot-large-token-shield-region = 585,802,75,84
 pilot-small-token-icon-region = 17,140,100,100
 pilot-large-token-icon-region = 38,347,170,170
-pilot-legal-region = 559,703,142,21
+pilot-legal-region = 533,1031,200,7
 
 # Huge Ship Double-Card
 huge-resistance-front-template = x-wing/components/huge-ship-card/images/resistance-front-overlay.jp2
