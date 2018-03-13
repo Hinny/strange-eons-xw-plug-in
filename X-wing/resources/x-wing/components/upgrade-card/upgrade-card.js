@@ -460,7 +460,8 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 				c = 62;
 			}
 		}
-		if( $UpgradeType != 'title' ) {
+
+		if( $UpgradeType != 'modification' && $UpgradeType != 'title' && style != 'full' ) {
 			if(  $$DoubleIcon.yesNo ) {
 				d = 110;
 				e = 125;
@@ -517,11 +518,11 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	}
 
 	// Draw the Upgrade Icon
-	if( $UpgradeType != 'title' ) { // no icon for title
-		if (style == 'full' ){  // full art: no overlay but alt region
-			upgradeIconBox.markupText = '<' + $UpgradeType + '>';
-			upgradeIconBox.draw( g, R('icon-alt') );
-		} else { // regular art
+	if (style == 'full' ){  // full art: always overlay but alt region
+		upgradeIconBox.markupText = '<' + $UpgradeType + '>';
+		upgradeIconBox.draw( g, R('icon-alt') );
+	} else { // regular art
+		if( $UpgradeType != 'modification' && $UpgradeType != 'title' ) { // no icon for modification or title
 			sheet.paintImage( g, 'upgrade-icon-overlay', 'upgrade-icon-overlay-region');
 			upgradeIconBox.markupText = '<' + $UpgradeType + '>';
 			upgradeIconBox.draw( g, R('icon') );
