@@ -125,7 +125,7 @@ function createInterface( diy, editor ) {
 	styleItems[0] = ListItem( 'regular', @xw-style-regular );
 	styleItems[1] = ListItem( 'full', @xw-style-full );
 	styleBox = comboBox( styleItems );
-	bindings.add( 'Style', styleBox, [0, 1] );
+	bindings.add( 'Style', styleBox, [0,1] );
 
 	restrictionItems = [ #xw-restriction-limited, #xw-restriction-rebel, #xw-restriction-imperial, #xw-restriction-scum, #xw-restriction-small, #xw-restriction-large, #xw-restriction-huge ];
 	upgradeRestrictionField = autocompletionField( restrictionItems );
@@ -260,13 +260,32 @@ function createInterface( diy, editor ) {
 		try {
 			// art style should determine if secondary weapon can be used
 			if( styleBox.getSelectedIndex() == 1){
-				weaponCheckbox.setSelected(false);
-				dualWeaponCheckbox.setSelected(false);
+				// common panel
+				doubleCheckbox.setEnabled(false);  // dual upgrade
+				//front panel
+				energyLimitBox.setEnabled(false);  // energy limit
+				weaponCheckbox.setSelected(false);  // secondary weapon
 				weaponCheckbox.setEnabled(false);
+				attackValueBox.setEnabled(false);
+				rangeBox.setEnabled(false);
+				// dual panel
+				dualWeaponCheckbox.setSelected(false);
+				dualEnergyLimitBox.setEnabled(false);
 				dualWeaponCheckbox.setEnabled(false);
+				dualAttackValueBox.setEnabled(false);
+				dualRangeBox.setEnabled(false);
+				return;
 			} else {
+				// common panel
+				doubleCheckbox.setEnabled(true);  // dual upgrade
+				//front panel
+				energyLimitBox.setEnabled(true);
 				weaponCheckbox.setEnabled(true);
+				// attackValueBox and rangeBox managed after
+				// dual panel
+				dualEnergyLimitBox.setEnabled(true);
 				dualWeaponCheckbox.setEnabled(true);
+				// dualAttackValueBox and dualRangeBox managed after
 			}
 			if( weaponCheckbox.selected ) {
 				attackValueBox.setEnabled(true);
