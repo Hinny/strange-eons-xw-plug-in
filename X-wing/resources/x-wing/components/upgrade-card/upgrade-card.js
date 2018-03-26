@@ -462,14 +462,14 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 	}
 
 	// Determine Text Area
-	if ( style != 'full' ){
+	if ( style == 'regular' ){
 		a = 0;
 		b = 0;
 		c = 0;
 		d = 0;
 		e = 45;
 		if( secondaryWeapon ) {
-			if( energyLimit == '-' ) {
+			if( energyLimit == '-' ) { // no ernergy
 				a = 62;
 				b = 481;
 				c = 0;
@@ -489,13 +489,14 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 			}
 		}
 
-		upgradeTextBox.setPageShape( PageShape.CompoundShape(
-		PageShape.CompoundShape(
-			PageShape.CupShape( 0, a, b, 0, 0 ),
-			b,
-			PageShape.CupShape( 0, c, 596, 0, 0 ) ),
-		642,
-		PageShape.CupShape( d, 0, 655, e, 97 ) ) );
+		upgradeTextBox.setPageShape(PageShape.CompoundShape(
+										PageShape.CompoundShape(PageShape.CupShape( 0, a, b, 0, 0 ),
+																b,
+																PageShape.CupShape( 0, c, 596, 0, 0 ) ),
+																642,
+																PageShape.CupShape( d, 0, 655, e, 97 )
+																)
+									);
 	}
 
 	// Determine Text content
