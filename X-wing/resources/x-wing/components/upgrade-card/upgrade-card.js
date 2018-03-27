@@ -497,6 +497,8 @@ function paintCardFaceComponents( g, diy, sheet, side) {
 																PageShape.CupShape( d, 0, 655, e, 97 )
 																)
 									);
+	}else {
+		upgradeTextBox.setPageShape(PageShape.RECTANGLE_SHAPE);
 	}
 
 	// Determine Text content
